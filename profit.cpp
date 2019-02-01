@@ -22,22 +22,39 @@ int main()
 	std::cin >> input;
 	cells.push_back(input);
     }
-
+    cells.push_back(0);
+    cells.push_back(0);
     int max_profit = cells.at(0);
     for (size_t i = 1; i < cells.size() - 1;)
     {
+	//std::cout << "i @ " << i << std::endl;
 	if (cells.at(i) >= 0 && cells.at(i + 1) >= 0)
 	{
+	    //std::cout << "i is " << cells.at(i) << " and i+1 is " << cells.at(i + 1) << std::endl;
 	    max_profit += cells.at(i) + cells.at(i + 1);
+	    i += 2;
+	}
+	else if ((cells.at(i) < 0 && cells.at(i + 1) < 0 && cells.at(i + 2) < 0 && cells.at(i + 3) < 0))
+	{
+	    max_profit += cells.at(i);
+	    i += 1;
+	}
+	else if ((cells.at(i) < 0 && cells.at(i + 1) < 0 && cells.at(i + 2) < 0)
+		 && cells.at(i) >= cells.at(i + 1) && cells.at(i +  1) >= cells.at(i + 2))
+	{
+	    //std::cout << "i+1 is " << cells.at(i + 1) << std::endl;
+	    max_profit += cells.at(i + 1);
 	    i += 2;
 	}
 	else if (cells.at(i) <= cells.at(i + 1))
 	{
+	    //std::cout << "2v i+1 is " << cells.at(i + 1) << std::endl;
 	    max_profit += cells.at(i + 1);
 	    i += 2;
 	}
 	else
 	{
+	    //std::cout << "i is " << cells.at(i) << std::endl;
 	    max_profit += cells.at(i);
 	    i += 1;
 	}
