@@ -31,7 +31,7 @@ int main()
 	    max_profit += cells.at(i) + cells.at(i + 1);
 	    i += 2;
 	}
-	else if (cells.at(i) < cells.at(i + 1))
+	else if (cells.at(i) <= cells.at(i + 1))
 	{
 	    max_profit += cells.at(i + 1);
 	    i += 2;
@@ -43,6 +43,6 @@ int main()
 	}
 	if (i == cells.size() - 1 && cells.at(i) > 0) max_profit += cells.at(i);
     }
-    std::cout << max_profit << std::endl;
+    std::cout << std::max(max_profit, 0) << std::endl;
     return 0;
 }
