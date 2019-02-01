@@ -1,23 +1,18 @@
 #include <iostream>
-#include <vector>
+#include <set>
 
 int main()
 {
     long long int n;
     int k;
     std::cin >> n >> k;
-    std::vector<long long int> nb(n, 0);
+    std::set<long long int> nb;
     long long int numb;
     for (int i = 0; i < k; i++)
     {
 	std::cin >> numb;
-	if (numb >= 0) nb.at(numb - 1) += 1;
+	if (numb >= 0) nb.insert(numb);
     }
-    long long int f = 0;
-    for (auto &i : nb)
-    {
-	if (i == 0) f += 1;
-    }
-    std::cout << f << std::endl;
+    std::cout << n - nb.size() << std::endl;
     return 0;
 }
