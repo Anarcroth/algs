@@ -8,58 +8,35 @@
 // Output
 // 10
 
-#include <iostream>
 #include <vector>
+#include <iostream>
+#include <algorithm>
 
 int main()
 {
     int N;
     std::cin >> N;
     std::vector<int> cells;
+    std::vector<int> solutions;
     int input;
     for (int i = 0; i < N; i++)
     {
 	std::cin >> input;
 	cells.push_back(input);
     }
+
     cells.push_back(0);
-    cells.push_back(0);
-    int max_profit = cells.at(0);
-    for (size_t i = 1; i < cells.size() - 1;)
-    {
-	//std::cout << "i @ " << i << std::endl;
-	if (cells.at(i) >= 0 && cells.at(i + 1) >= 0)
-	{
-	    //std::cout << "i is " << cells.at(i) << " and i+1 is " << cells.at(i + 1) << std::endl;
-	    max_profit += cells.at(i) + cells.at(i + 1);
-	    i += 2;
-	}
-	else if ((cells.at(i) < 0 && cells.at(i + 1) < 0 && cells.at(i + 2) < 0 && cells.at(i + 3) < 0))
-	{
-	    max_profit += cells.at(i);
-	    i += 1;
-	}
-	else if ((cells.at(i) < 0 && cells.at(i + 1) < 0 && cells.at(i + 2) < 0)
-		 && cells.at(i) >= cells.at(i + 1) && cells.at(i +  1) >= cells.at(i + 2))
-	{
-	    //std::cout << "i+1 is " << cells.at(i + 1) << std::endl;
-	    max_profit += cells.at(i + 1);
-	    i += 2;
-	}
-	else if (cells.at(i) <= cells.at(i + 1))
-	{
-	    //std::cout << "2v i+1 is " << cells.at(i + 1) << std::endl;
-	    max_profit += cells.at(i + 1);
-	    i += 2;
-	}
-	else
-	{
-	    //std::cout << "i is " << cells.at(i) << std::endl;
-	    max_profit += cells.at(i);
-	    i += 1;
-	}
-	if (i == cells.size() - 1 && cells.at(i) > 0) max_profit += cells.at(i);
-    }
-    std::cout << std::max(max_profit, 0) << std::endl;
+    solutions.push_back(cells.at(0));
+    solutions.push_back(cells.at(0) + cells.at(1));
+    int index = 2;
+
+    std::for_each(cells.begin() + 2, cells.end(),
+		  [&solutions, &index] (int &currel) {
+		      int temp = std::max(solutions.at(index - 2), solutions.at(index - 1));
+		      solutions.push_back(temp + currel);
+		      index += 1;
+		  });
+
+    std::cout << std::max(solutions.at(index - 1), 0) << std::endl;
     return 0;
 }
