@@ -1,5 +1,4 @@
 #include <iostream>
-#include <list>
 #include <map>
 #include <vector>
 
@@ -7,7 +6,7 @@ class graph
 {
 public:
     int verts;
-    std::list<int> *adj;
+    std::vector<int> *adj;
 
     graph(int _verts);
     int size();
@@ -16,7 +15,7 @@ public:
 
 graph::graph(int _verts) : verts(_verts)
 {
-    adj = new std::list<int>[verts];
+    adj = new std::vector<int>[verts];
 }
 
 int graph::size()
