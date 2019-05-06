@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <list>
 #include <map>
@@ -12,31 +11,31 @@ std::vector<int> disc;
 std::vector<int> low;
 std::vector<int> parent;
 
-class Graph
+class graph
 {
 private:
-    int V;                  // vertices
-    std::list<int> *adj;    // adjacency lists
+    int verts;
+    std::list<int> *adj;
     void bridge_find(int v);
 public:
-    Graph(int V);
+    graph(int _verts);
     void add_edge(int v, int w);
     void bridge();
 };
 
-Graph::Graph(int V)
+graph::graph(int _verts)
 {
-    this->V = V;
-    adj = new std::list<int>[V];
+    verts = _verts;
+    adj = new std::list<int>[verts];
 }
 
-void Graph::add_edge(int v, int w)
+void graph::add_edge(int v, int w)
 {
     adj[v].push_back(w);
     adj[w].push_back(v);
 }
 
-void Graph::bridge_find(int u)
+void graph::bridge_find(int u)
 {
     visited[u] = true;
     disc[u] = low[u] = ++t;
@@ -58,19 +57,19 @@ void Graph::bridge_find(int u)
     }
 }
 
-void Graph::bridge()
+void graph::bridge()
 {
-    visited.assign(V, false);
-    disc.assign(V, -1);
-    low.assign(V, -1);
-    parent.assign(V, -1);
+    visited.assign(verts, false);
+    disc.assign(verts, -1);
+    low.assign(verts, -1);
+    parent.assign(verts, -1);
 
-    for (int i = 0; i < V; i++) {
+    for (int i = 0; i < verts; i++) {
         parent[i] = -1;
         visited[i] = false;
     }
 
-    for (int i = 0; i < V; i++)
+    for (int i = 0; i < verts; i++)
         if (visited[i] == false)
             bridge_find(i);
 }
@@ -83,7 +82,7 @@ int main()
     int n, m;
     std::cin >> n >> m;
 
-    Graph g(n);
+    graph g(n);
     for (int i = 0; i < m; i++) {
 	int a, b;
 	std::cin >> a >> b;
