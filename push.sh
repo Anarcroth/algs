@@ -9,4 +9,4 @@ fi
 
 git add *
 git commit -m "Commit (Automated)"
-git push cloud master
+git push origin master
